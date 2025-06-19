@@ -1,0 +1,17 @@
+<title>{{ ucfirst($sport) }} Workouts</title>
+
+ <h1>{{ ucfirst($sport) }} Workouts</h1>
+
+    @if(count($workouts) > 0)
+        <ul class="workout-list">
+    @foreach($workouts as $workout)
+        <li>
+            <h3>{{ $workout['title'] ?? 'Untitled workout' }}</h3>
+            <p>{{ $workout['description'] ?? 'No description available.' }}</p>
+        </li>
+    @endforeach
+</ul>
+
+    @else
+        <p>No workouts found for this sport.</p>
+    @endif

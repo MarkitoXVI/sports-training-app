@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WorkoutController;
+use App\Http\Controllers\ChallengeController;
+use App\Http\Controllers\ChallengeProgressController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +31,28 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+//Workouts
+
+Route::get('/workouts', function () {
+    return view('workouts.index');
+})->middleware(['auth'])->name('workouts.index');
+
+Route::get('/workouts/{sport}', function ($sport) {
+    return view('workouts.sport', compact('sport'));
+})->middleware(['auth'])->name('workouts.sport');
+
+Route::get('/workouts/sport/{sport}', [WorkoutController::class, 'showSportWorkouts'])->name('workouts.sport');
+
+//Challenge
+
+Route::get('/challenges', [ChallengeController::class, 'index'])->name('challenges.index');
+
+Route::post('/challenges/{challenge}/accept', [ChallengeProgressController::class, 'accept'])->name('challenges.accept');
+Route::post('/challenges/{challenge}/complete', [ChallengeProgressController::class, 'complete'])->name('challenges.complete');
+
+Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
+Route::get('/dashboard', [ChallengeController::class, 'dashboard'])->middleware('auth')->name('dashboard');
+
 
 require __DIR__.'/auth.php';

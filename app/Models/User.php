@@ -23,6 +23,12 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function challengeProgresses()
+{
+    return $this->hasMany(\App\Models\ChallengeProgress::class);
+}
+
+
     /**
      * The attributes that should be hidden for serialization.
      *
