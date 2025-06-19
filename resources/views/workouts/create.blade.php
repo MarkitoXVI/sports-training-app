@@ -1,43 +1,139 @@
 @extends('layouts.app')
 
+@section('title', 'Create Workout')
+
 @section('content')
-<div class="container mx-auto p-4 max-w-lg">
-    <h1 class="text-3xl font-bold mb-6">Add Workout for {{ ucfirst($sport) }}</h1>
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 2rem;
+        color: #2d3748;
+    }
 
-    @if ($errors->any())
-        <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
-            <ul class="list-disc pl-5">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    .form-container {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 2rem;
+        border-radius: 20px;
+        max-width: 700px;
+        margin: 0 auto;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
 
-    <form action="{{ route('workouts.store', $sport) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+    .form-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #4a5568;
+    }
+
+    input, textarea, select {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border-radius: 10px;
+        border: 1px solid #cbd5e0;
+        margin-bottom: 1.5rem;
+        font-size: 1rem;
+        background: #f7fafc;
+        transition: border-color 0.3s ease;
+    }
+
+    input:focus, textarea:focus, select:focus {
+        border-color: #667eea;
+        outline: none;
+        background: #fff;
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 0.9rem 2rem;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .fixed-back-button {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 0.6rem 1.2rem;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        transition: background 0.3s ease, transform 0.2s ease;
+        z-index: 1001;
+    }
+
+    .fixed-back-button:hover {
+        background: linear-gradient(135deg, #5a67d8, #6b46c1);
+        transform: translateY(-2px);
+    }
+</style>
+
+<a href="{{ url()->previous() }}" class="fixed-back-button">
+    <span class="back-icon">&#8592;</span> Back
+</a>
+
+<div class="form-container">
+    <h1 class="form-title">Create New Workout</h1>
+
+    <form action="{{ route('workouts.store') }}" method="POST">
         @csrf
 
-        <div>
-            <label for="title" class="block font-semibold mb-1">Workout Title <span class="text-red-600">*</span></label>
-            <input type="text" name="title" id="title" class="w-full border rounded px-3 py-2" value="{{ old('title') }}" required>
-        </div>
+        <label for="title">Workout Title</label>
+        <input type="text" id="title" name="title" placeholder="e.g. Strength Circuit" required>
 
-        <div>
-            <label for="description" class="block font-semibold mb-1">Description</label>
-            <textarea name="description" id="description" rows="4" class="w-full border rounded px-3 py-2">{{ old('description') }}</textarea>
-        </div>
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="4" placeholder="Write workout description..." required></textarea>
 
-        <div>
-            <label for="image" class="block font-semibold mb-1">Workout Image (optional)</label>
-            <input type="file" name="image" id="image" accept="image/*" class="w-full">
-        </div>
+        <label for="duration">Duration (e.g. 30 mins)</label>
+        <input type="text" id="duration" name="duration" placeholder="e.g. 30 mins" required>
 
-        <div>
-            <button type="submit" class="bg-blue-600 text-black rounded px-4 py-2 hover:bg-blue-700 transition">
-                Add Workout
-            </button>
-            <a href="{{ route('workouts.sport', $sport) }}" class="ml-4 text-blue-600 underline">Cancel</a>
-        </div>
+        <label for="sport">Sport</label>
+        <select id="sport" name="sport" required>
+            <option value="">Select Sport</option>
+            <option value="football">Football</option>
+            <option value="basketball">Basketball</option>
+            <option value="swimming">Swimming</option>
+            <option value="tennis">Tennis</option>
+            <!-- Add more sports here -->
+        </select>
+
+        <label for="difficulty">Difficulty (1-5)</label>
+        <select id="difficulty" name="difficulty" required>
+            <option value="">Select Difficulty</option>
+            @for ($i = 1; $i <= 5; $i++)
+                <option value="{{ $i }}">{{ $i }}</option>
+            @endfor
+        </select>
+
+        <button type="submit" class="submit-btn">Save Workout</button>
     </form>
 </div>
 @endsection

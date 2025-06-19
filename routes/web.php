@@ -43,10 +43,17 @@ Route::get('/workouts/{sport}', function ($sport) {
 })->middleware(['auth'])->name('workouts.sport');
 
 Route::get('/workouts/sport/{sport}', [WorkoutController::class, 'showSportWorkouts'])->name('workouts.sport');
+// Show workout details/start page
+Route::get('/workouts/{id}', [WorkoutController::class, 'show'])->name('workouts.show');
+
+Route::get('/workouts/create', [WorkoutController::class, 'create'])->name('workouts.create');
+
+
 
 //Challenge
 
 Route::get('/challenges', [ChallengeController::class, 'index'])->name('challenges.index');
+Route::get('/challenges/{id}', [ChallengeController::class, 'show'])->name('challenges.show');
 
 Route::post('/challenges/{challenge}/accept', [ChallengeProgressController::class, 'accept'])->name('challenges.accept');
 Route::post('/challenges/{challenge}/complete', [ChallengeProgressController::class, 'complete'])->name('challenges.complete');

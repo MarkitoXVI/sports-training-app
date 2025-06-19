@@ -359,6 +359,28 @@
     z-index: 1001;
 }
 
+.fixed-create-button {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1001;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.fixed-create-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
     </style>
 </head>
 <body>
@@ -372,12 +394,17 @@
     <span class="back-icon">&#8592;</span> Back
 </a>
 
+<a href="{{ route('workouts.create') }}" class="back-button fixed-back-button" style="top: 4.5rem; background: rgba(102, 126, 234, 0.15);">
+    ➕ Create Workout
+</a>
+
+
 
     <div class="container">
         <header class="header-section">
             <div class="sport-icon">🏆</div>
             <h1 class="page-title">{{ ucfirst($sport) }} Workouts</h1>
-            <p class="workout-count">{{ count($workouts) }} workouts available</p>
+            <p class="workout-count">{{ is_countable($workouts) ? count($workouts) : 0 }} workouts available</p>
         </header>
 
         @if(count($workouts) > 0)

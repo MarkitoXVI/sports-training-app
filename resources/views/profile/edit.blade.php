@@ -184,10 +184,10 @@
     <div class="profile-header">
         <div class="logo">SportFlex</div>
         <div class="nav-links">
-            <a href="#" class="nav-link">Dashboard</a>
-            <a href="#" class="nav-link">Workouts</a>
-            <a href="#" class="nav-link">Progress</a>
-            <a href="#" class="nav-link">Profile</a>
+            <a href="/dashboard" class="nav-link">Dashboard</a>
+            <a href="/workouts" class="nav-link">Workouts</a>
+            <a href="/progress" class="nav-link">Progress</a>
+            <a href="profile" class="nav-link">Profile</a>
         </div>
     </div>
 

@@ -15,6 +15,14 @@ class WorkoutController extends Controller
         return view('workouts.sport', compact('sport', 'workouts'));
     }
 
+    public function create()
+{
+    return view('workouts.create', [
+        'workouts' => [], // or omit if using a separate template
+    ]);
+}
+
+
     private function getWorkoutsBySport($sport)
 {
     $allWorkouts = [
@@ -49,6 +57,8 @@ class WorkoutController extends Controller
             ['title' => 'Strength training', 'description' => 'Build overall fitness and muscle strength to improve performance.'],
         ],
     ];
+
+    
 
     return $allWorkouts[$sport] ?? [];
 }
