@@ -43,12 +43,15 @@ Route::get('/workouts/{sport}', function ($sport) {
 })->middleware(['auth'])->name('workouts.sport');
 
 Route::get('/workouts/sport/{sport}', [WorkoutController::class, 'showSportWorkouts'])->name('workouts.sport');
+
 // Show workout details/start page
 Route::get('/workouts/{id}', [WorkoutController::class, 'show'])->name('workouts.show');
 
-Route::get('/workouts/create', [WorkoutController::class, 'create'])->name('workouts.create');
+Route::post('/workouts/store', [WorkoutController::class, 'store'])->name('workouts.store');
 
+Route::get('/workouts/steps/{workoutId}', [WorkoutController::class, 'steps'])->name('workouts.steps');
 
+Route::get('/workouts/create/{sport}', [WorkoutController::class, 'create'])->name('workouts.create');
 
 //Challenge
 
@@ -62,4 +65,4 @@ Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'inde
 Route::get('/dashboard', [ChallengeController::class, 'dashboard'])->middleware('auth')->name('dashboard');
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -3,9 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use \Illuminate\Database\Eloquent\Factories\HasFactory;
 class Workout extends Model
 {
-    protected $fillable = ['sport', 'title', 'description', 'image'];
+    use HasFactory;
+    protected $fillable = ['sport', 'title', 'description'];
 
 }

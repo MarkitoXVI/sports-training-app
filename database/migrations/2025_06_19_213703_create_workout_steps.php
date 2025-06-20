@@ -8,25 +8,26 @@ return new class extends Migration {
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('challenges', function (Blueprint $table) {
+        Schema::create('workout_steps', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('workout_id')->constrained('workouts')->onDelete('cascade');
             $table->string('title');
-            $table->string('athlete_name');
-            $table->string('athlete_image')->nullable(); // URL or path to image
             $table->text('description');
-            $table->enum('difficulty', ['Easy', 'Intermediate', 'Hard'])->default('Intermediate'); // Easy, Intermediate, Hard
+            $table->integer('repetitions'); 
+            $table->integer('time'); 
+            $table->integer('order')->default(0); // Order of the step in the workout
+
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('challenges');
+        Schema::dropIfExists('workout_steps');
     }
 };
