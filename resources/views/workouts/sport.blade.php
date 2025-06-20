@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <title>{{ ucfirst($sport) }} Workouts</title>
@@ -60,8 +61,17 @@
         }
 
         @keyframes floatShape {
-            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
-            50% { transform: translateY(-30px) rotate(180deg); opacity: 0.2; }
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.1;
+            }
+
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+                opacity: 0.2;
+            }
         }
 
         .container {
@@ -86,8 +96,15 @@
         }
 
         @keyframes bounceIcon {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(5deg);
+            }
         }
 
         .page-title {
@@ -128,12 +145,29 @@
             animation: slideInUp 0.6s ease-out forwards;
         }
 
-        .workout-card:nth-child(1) { animation-delay: 0.1s; }
-        .workout-card:nth-child(2) { animation-delay: 0.2s; }
-        .workout-card:nth-child(3) { animation-delay: 0.3s; }
-        .workout-card:nth-child(4) { animation-delay: 0.4s; }
-        .workout-card:nth-child(5) { animation-delay: 0.5s; }
-        .workout-card:nth-child(6) { animation-delay: 0.6s; }
+        .workout-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .workout-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .workout-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .workout-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .workout-card:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .workout-card:nth-child(6) {
+            animation-delay: 0.6s;
+        }
 
         @keyframes slideInUp {
             to {
@@ -321,21 +355,21 @@
             .container {
                 padding: 1rem;
             }
-            
+
             .workout-card {
                 padding: 1.5rem;
             }
-            
+
             .workout-header {
                 flex-direction: column;
                 gap: 1rem;
             }
-            
+
             .workout-actions {
                 flex-direction: column;
                 align-items: stretch;
             }
-            
+
             .start-btn {
                 justify-content: center;
             }
@@ -353,14 +387,36 @@
         }
 
         .fixed-back-button {
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    z-index: 1001;
-}
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+        }
 
+        .fixed-create-button {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1001;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .fixed-create-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
+
 <body>
     <div class="animated-bg">
         <div class="bg-shape"></div>
@@ -368,16 +424,21 @@
         <div class="bg-shape"></div>
     </div>
 
-    <a href="{{ url()->previous() }}" class="back-button fixed-back-button">
-    <span class="back-icon">&#8592;</span> Back
-</a>
+    <a href="/workouts" class="back-button fixed-back-button">
+        <span class="back-icon">&#8592;</span> Back
+    </a>
+
+    <a href="{{ route('workouts.create', $sport) }}" class="back-button fixed-back-button"
+        style="top: 4.5rem; background: rgba(102, 126, 234, 0.15);">
+        ➕ Create Workout
+    </a>
 
 
     <div class="container">
         <header class="header-section">
             <div class="sport-icon">🏆</div>
             <h1 class="page-title">{{ ucfirst($sport) }} Workouts</h1>
-            <p class="workout-count">{{ count($workouts) }} workouts available</p>
+            <p class="workout-count">{{ is_countable($workouts) ? count($workouts) : 0 }} workouts available</p>
         </header>
 
         @if(count($workouts) > 0)
@@ -405,7 +466,7 @@
                         @endif
 
                         <div class="workout-actions">
-<a href="#" class="start-btn">Start Workout</a>
+                            <a href="{{ route('workouts.steps', $workout['id']) }}" class="start-btn">Start Workout</a>
 
 
                             {{-- Difficulty indicator example --}}
@@ -427,7 +488,7 @@
             </div>
         @endif
     </div>
-    
-</body>
-</html>
 
+</body>
+
+</html>
